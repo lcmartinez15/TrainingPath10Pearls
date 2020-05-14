@@ -1,0 +1,15 @@
+{
+    "name": "trainingpathapi",
+    "version": "1.0.0",
+    "description": "training path api",
+    "main": "index.js",
+    "scripts": {
+        "start": "node server",
+        "server": "nodemon server"
+    },
+    "author": "Laura Martinez",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.17.1"
+    }
+}
