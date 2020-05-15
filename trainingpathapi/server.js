@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
+const { PORT } = require("./config");
 
-app.listen(5000, () => {
-    console.log("Server running now");
+// Init middlaware
+app.use(express.json({ extended: false }));
+
+app.listen(PORT, () => {
+    console.log(`server running ${PORT}`);
 });
