@@ -14,6 +14,7 @@ class Server {
                 console.log(
                     _config.APPLICATION_NAME + " API running on port " + _config.PORT
                 );
+                //resolve();
             });
         });
     }
