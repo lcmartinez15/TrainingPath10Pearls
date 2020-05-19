@@ -11,7 +11,7 @@ app.listen(PORT, () => {
 
 const container = require("./src/startup/container");
 const server = container.resolve("app");
-const { MONGO_URI, PORT } = container.resolve("config");
+const { MONGO_URI } = container.resolve("config");
 
 const mongoose = require("mongoose");
 mongoose.set("useCreateIndex", true);
