@@ -1,14 +1,3 @@
-/* const express = require("express");
-const app = express();
-const { PORT } = require("./src/config");
-
-// Init middlaware
-app.use(express.json({ extended: false }));
-
-app.listen(PORT, () => {
-    console.log(`server running ${PORT}`);
-}); */
-
 const container = require("./src/startup/container");
 const server = container.resolve("app");
 const { MONGO_URI } = container.resolve("config");

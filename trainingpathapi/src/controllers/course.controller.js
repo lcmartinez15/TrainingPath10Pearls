@@ -14,7 +14,7 @@ class CourseController {
     async create(req, res) {
         const { body } = req;
         console.log("controller course " + body);
-        const createdCourse = await _courseService.create(body);
+        const createdCourse = await _courseService.createCourseAndChapters(body);
         return res.status(201).send(createdCourse);
     }
 
@@ -36,6 +36,23 @@ class CourseController {
         const { courseId } = req.params;
         const deleteCourse = await _courseService.delete(courseId);
         return res.send(deleteCourse);
+    }
+
+    //Search udemy courses
+    async search(req, res) {
+        const { search } = req.query;
+        console.log("controller course udemy");
+        const udemyCourses = await _courseService.searchCourseUdemy(search);
+        return res.status(201).send(udemyCourses);
+    }
+
+    async searchChapter(req, res) {
+        const { courseId } = req.query;
+        console.log("controller course udemy");
+        const udemyCourses = await _courseService.searchChaptersByCourseUdemy(
+            courseId
+        );
+        return res.status(201).send(udemyCourses);
     }
 }
 

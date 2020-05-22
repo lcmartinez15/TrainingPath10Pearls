@@ -18,6 +18,12 @@ class AuthController {
         const creds = await _authService.signIn(body);
         return res.send(creds);
     }
+
+    async getUser(req, res) {
+        console.log("controller signUp " + req);
+        const createdUser = await _authService.getById(req.user.id);
+        return res.status(201).send(createdUser);
+    }
 }
 
 module.exports = AuthController;

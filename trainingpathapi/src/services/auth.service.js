@@ -1,4 +1,6 @@
 const { generateToken } = require("../helpers/jwt.helper");
+const { sendEmail } = require("../helpers/email-helper");
+
 let _userService = null;
 
 class AuthService {
@@ -16,8 +18,19 @@ class AuthService {
             error.message = "User already exist";
             throw error;
         }
+        //send email
+        user.password = "Temporal01";
+        user.status = "inactive";
+        var newUser = await _userService.create(user);
 
-        return await _userService.create(user);
+        const userToEncode = {
+            email: newUser.email,
+            id: newUser.id,
+        };
+        const token = generateToken(userToEncode);
+        await sendEmail(newUser.email, newUser.id, token);
+
+        return newUser;
     }
 
     async signIn(user) {
@@ -27,7 +40,15 @@ class AuthService {
         if (!userExist) {
             const error = new Error();
             error.status = 404;
-            error.message = "User does not exist";
+            error.message =
+                "The fields entered does not match in our records, please validate and try again";
+            throw error;
+        }
+        if (userExist.status == "inactive") {
+            const error = new Error();
+            error.status = 404;
+            error.message =
+                "The fields entered does not match in our records, please validate and try again";
             throw error;
         }
 
@@ -35,7 +56,8 @@ class AuthService {
         if (!validPassword) {
             const error = new Error();
             error.status = 400;
-            error.message = "Invalid Password";
+            error.message =
+                "The fields entered does not match in our records, please validate and try again";
             throw error;
         }
 
@@ -47,6 +69,11 @@ class AuthService {
         const token = generateToken(userToEncode);
 
         return { token, user: userExist };
+    }
+
+    async getById(id) {
+        console.log("service signin " + id);
+        return await _userService.get(id);
     }
 }
 

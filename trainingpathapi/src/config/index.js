@@ -9,4 +9,5 @@ module.exports = {
     JWT_SECRET: process.env.JWT_SECRET,
     CACHE_KEY: process.env.CACHE_KEY,
     SWAGGER_PATH: `../config/swagger/${process.env.SWAGGER_DOC}.json`,
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
 };
