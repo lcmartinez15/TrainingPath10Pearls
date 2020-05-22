@@ -4,7 +4,7 @@ import Login from "../components/auth/Login";
 const LoginPage = () => {
   return (
     <Fragment>
-      <h1> Login </h1> <Login />
+      <Login />
     </Fragment>
   );
 };
