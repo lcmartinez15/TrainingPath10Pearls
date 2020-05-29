@@ -3,6 +3,6 @@ module.exports = {
     Category: require("./category.model"),
     Course: require("./course.model"),
     Chapter: require("./chapter.model"),
-    Logprocess: require("./logprocess.model"),
+    LogProcess: require("./logprocess.model"),
     UserTrainingPath: require("./usertrainingpath.model"),
 };

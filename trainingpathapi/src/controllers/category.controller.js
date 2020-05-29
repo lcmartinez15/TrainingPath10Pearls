@@ -21,7 +21,10 @@ class CategoryController {
     async getAll(req, res) {
         const { pageSize, pageNum } = req.query;
 
-        const Categorys = await _categoryService.getAll(pageSize, pageNum);
+        const Categorys = await _categoryService.getAllCategories(
+            pageSize,
+            pageNum
+        );
         return res.send(Categorys);
     }
 
@@ -34,7 +37,7 @@ class CategoryController {
 
     async delete(req, res) {
         const { categoryId } = req.params;
-        const deleteCategory = await _categoryService.delete(categoryId);
+        const deleteCategory = await _categoryService.deleteLogic(categoryId);
         return res.send(deleteCategory);
     }
 }

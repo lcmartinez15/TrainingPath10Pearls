@@ -5,6 +5,10 @@ class CategoryRepository extends BaseRepository {
         super(Category);
         _category = Category;
     }
+
+    async getAllCategories() {
+        return await _category.find({ isDeleted: false });
+    }
 }
 
 module.exports = CategoryRepository;

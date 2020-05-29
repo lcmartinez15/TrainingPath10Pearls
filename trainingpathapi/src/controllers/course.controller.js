@@ -20,7 +20,6 @@ class CourseController {
 
     async getAll(req, res) {
         const { pageSize, pageNum } = req.query;
-
         const courses = await _courseService.getAll(pageSize, pageNum);
         return res.send(courses);
     }

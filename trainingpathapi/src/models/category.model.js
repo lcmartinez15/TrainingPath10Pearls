@@ -10,6 +10,11 @@ const CategorySchema = new Schema({
         type: String,
         required: true,
     },
+    isDeleted: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
 });
 
 module.exports = mongoose.model("category", CategorySchema);

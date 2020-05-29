@@ -15,6 +15,8 @@ module.exports = function({
     AuthRoutes,
     CategoryRoutes,
     CourseRoutes,
+    LogProcessRoutes,
+    UserTrainingPathRoutes,
 }) {
     const router = express.Router();
     const apiRoutes = express.Router();
@@ -25,6 +27,8 @@ module.exports = function({
     apiRoutes.use("/auth", AuthRoutes);
     apiRoutes.use("/category", CategoryRoutes);
     apiRoutes.use("/course", CourseRoutes);
+    apiRoutes.use("/logProcessRoutes", LogProcessRoutes);
+    apiRoutes.use("/userTrainingPathRoutes", UserTrainingPathRoutes);
 
     router.use("/v1/api", apiRoutes);
 

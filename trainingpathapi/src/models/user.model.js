@@ -36,6 +36,11 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+    isDeleted: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
 });
 
 UserSchema.method.toJSON = function() {

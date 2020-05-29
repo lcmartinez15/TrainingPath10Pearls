@@ -6,6 +6,10 @@ class CategoryService extends BaseService {
         super(CategoryRepository);
         _categoryRepository = CategoryRepository;
     }
+
+    async getAllCategories(pageSize, pageNum) {
+        return await this.repository.getAllCategories(pageSize, pageNum);
+    }
 }
 
 module.exports = CategoryService;

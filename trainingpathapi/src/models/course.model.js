@@ -14,9 +14,22 @@ const CourseSchema = new Schema({
     tags: {
         type: String,
     },
+    img: {
+        type: String,
+    },
+    description: {
+        type: String,
+    },
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "category",
+    },
+    exteralId: {
+        type: String,
+    },
+    isDeleted: {
+        type: Boolean,
+        required: true,
     },
 });
 

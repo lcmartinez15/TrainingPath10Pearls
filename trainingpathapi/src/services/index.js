@@ -5,4 +5,6 @@ module.exports = {
     CourseService: require("./course.service"),
     ChapterService: require("./chapter.service"),
     CategoryService: require("./category.service"),
+    UserTrainingPathService: require("./userTrainingPath.service"),
+    LogProcessService: require("./logProcess.service"),
 };

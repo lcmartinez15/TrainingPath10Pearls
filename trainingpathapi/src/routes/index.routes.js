@@ -4,4 +4,6 @@ module.exports = {
     AuthRoutes: require("./auth.routes"),
     CategoryRoutes: require("./category.routes"),
     CourseRoutes: require("./course.routes"),
+    LogProcessRoutes: require("./logProcess.routes"),
+    UserTrainingPathRoutes: require("./userTrainingPath.routes"),
 };

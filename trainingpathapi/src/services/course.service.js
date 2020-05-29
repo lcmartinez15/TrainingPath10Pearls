@@ -11,14 +11,32 @@ class CourseService extends BaseService {
     }
 
     async createCourseAndChapters(entity) {
-        var course = {
+        //Create course
+        const course = {
             title: entity.title,
             link: entity.link,
             time: entity.time,
+            tags: entity.tags,
+            img: entity.img,
+            description: entity.description,
             category: "5ec340f457848d35cc415712",
+            exteralId: entity.id,
+            isDeleted: false,
         };
+        const res = await this.repository.create(course);
+        let newsChapter = entity.chapters.map((chapter) => ({
+            name: chapter.title,
+            type: chapter._class,
+            time: chapter.time,
+            percentage: (Number(chapter.time) * Number(res.time)) / 100,
+            description: chapter.description,
+            course: res.id,
+            exteralId: chapter.id,
+            isDeleted: false,
+        }));
 
-        return await this.repository.create(course);
+        const resChapters = await _chapterRepository.bulkInsert(newsChapter);
+        return res;
     }
 
     async searchCourseUdemy(search) {

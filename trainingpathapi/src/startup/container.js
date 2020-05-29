@@ -12,6 +12,8 @@ const {
     CourseService,
     CategoryService,
     ChapterService,
+    LogProcessService,
+    UserTrainingPathService,
 } = require("../services");
 
 //controllers
@@ -21,6 +23,8 @@ const {
     AuthController,
     CourseController,
     CategoryController,
+    LogProcessController,
+    UserTrainingPathController,
 } = require("../controllers");
 
 //routes
@@ -30,6 +34,8 @@ const {
     AuthRoutes,
     CourseRoutes,
     CategoryRoutes,
+    LogProcessRoutes,
+    UserTrainingPathRoutes,
 } = require("../routes/index.routes");
 const Routes = require("../routes");
 
@@ -50,7 +56,7 @@ const {
     CourseRepository,
     ChapterRepository,
     LogProcessRepository,
-    UserTrainigPathRepository,
+    UserTrainingPathRepository,
 } = require("../repositories");
 
 const container = createContainer();
@@ -69,6 +75,8 @@ container
         CourseService: asClass(CourseService).singleton(),
         CategoryService: asClass(CategoryService).singleton(),
         ChapterService: asClass(ChapterService).singleton(),
+        LogProcessService: asClass(LogProcessService).singleton(),
+        UserTrainingPathService: asClass(UserTrainingPathService).singleton(),
     })
     .register({
         HomeController: asClass(HomeController.bind(HomeController)).singleton(),
@@ -80,6 +88,12 @@ container
         CategoryController: asClass(
             CategoryController.bind(CategoryController)
         ).singleton(),
+        LogProcessController: asClass(
+            LogProcessController.bind(LogProcessController)
+        ).singleton(),
+        UserTrainingPathController: asClass(
+            UserTrainingPathController.bind(UserTrainingPathController)
+        ).singleton(),
     })
     .register({
         HomeRoutes: asFunction(HomeRoutes).singleton(),
@@ -87,13 +101,15 @@ container
         AuthRoutes: asFunction(AuthRoutes).singleton(),
         CourseRoutes: asFunction(CourseRoutes).singleton(),
         CategoryRoutes: asFunction(CategoryRoutes).singleton(),
+        LogProcessRoutes: asFunction(LogProcessRoutes).singleton(),
+        UserTrainingPathRoutes: asFunction(UserTrainingPathRoutes).singleton(),
     })
     .register({
         User: asValue(User),
         Category: asValue(Category),
         Course: asValue(Course),
         Chapter: asValue(Chapter),
-        Logprocess: asValue(Logprocess),
+        LogProcess: asValue(Logprocess),
         UserTrainingPath: asValue(UserTrainingPath),
     })
     .register({
@@ -102,7 +118,7 @@ container
         CourseRepository: asClass(CourseRepository).singleton(),
         ChapterRepository: asClass(ChapterRepository).singleton(),
         LogProcessRepository: asClass(LogProcessRepository).singleton(),
-        UserTrainigPathRepository: asClass(UserTrainigPathRepository).singleton(),
+        UserTrainingPathRepository: asClass(UserTrainingPathRepository).singleton(),
     });
 
 module.exports = container;

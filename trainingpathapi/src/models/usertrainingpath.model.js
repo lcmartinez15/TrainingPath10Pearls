@@ -11,12 +11,16 @@ const UserTrainingPathSchema = new Schema({
         ref: "user",
     },
     courses: [{
-        course: {
+        courseRef: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "course",
         },
         status: {
             type: String,
+        },
+        isDeleted: {
+            type: Boolean,
+            required: true,
         },
     }, ],
 });

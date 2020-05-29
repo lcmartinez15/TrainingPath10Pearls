@@ -4,5 +4,5 @@ module.exports = {
     CourseRepository: require("./course.repository"),
     ChapterRepository: require("./chapter.repository"),
     LogProcessRepository: require("./logproess.repository"),
-    UserTrainigPathRepository: require("./usertrainingpath.repository"),
+    UserTrainingPathRepository: require("./usertrainingpath.repository"),
 };

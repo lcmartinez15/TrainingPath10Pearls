@@ -1,9 +1,9 @@
 const BaseRepository = require("./base.repository");
 let _logprocess = null;
 class LogProcessRepository extends BaseRepository {
-    constructor({ Logprocess }) {
-        super(Logprocess);
-        _logprocess = Logprocess;
+    constructor({ LogProcess }) {
+        super(LogProcess);
+        _logprocess = LogProcess;
     }
 }
 
