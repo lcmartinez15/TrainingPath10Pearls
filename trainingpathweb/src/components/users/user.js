@@ -1,5 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+
+import { withRouter } from "react-router-dom";
 import {
   Card,
   Avatar,
@@ -21,8 +23,15 @@ const useStyles = makeStyles({
   },
 });
 
-const User = ({ user: { _id, firstname, lastname, role, email } }) => {
+const User = ({ user: { _id, firstname, lastname, role, email }, history }) => {
   const classes = useStyles();
+
+  const viewUser = async (e) => {
+    e.preventDefault();
+    console.log("click", _id);
+    //getCategory(_id);
+    history.push("/viewUser/" + _id);
+  };
 
   return (
     <Card className={classes.root}>
@@ -48,8 +57,8 @@ const User = ({ user: { _id, firstname, lastname, role, email } }) => {
         </CardContent>{" "}
       </CardActionArea>{" "}
       <CardActions>
-        <Button size="small" color="primary">
-          Share{" "}
+        <Button size="small" color="primary" onClick={(e) => viewUser(e)}>
+          View{" "}
         </Button>{" "}
         <Button size="small" color="primary">
           Learn More{" "}
@@ -58,4 +67,4 @@ const User = ({ user: { _id, firstname, lastname, role, email } }) => {
     </Card>
   );
 };
-export default User;
+export default withRouter(User);

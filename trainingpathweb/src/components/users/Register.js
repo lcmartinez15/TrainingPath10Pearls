@@ -1,8 +1,46 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
+import { makeStyles } from "@material-ui/styles";
 import { registerUser } from "../../redux/actions/users";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Divider,
+  Grid,
+  Button,
+  TextField,
+} from "@material-ui/core";
 import PropTypes from "prop-types";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3),
+  },
+  content: {
+    marginTop: theme.spacing(2),
+  },
+  pagination: {
+    marginTop: theme.spacing(3),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  spacer: {
+    flexGrow: 1,
+  },
+  row: {
+    height: "42px",
+    display: "flex",
+    alignItems: "center",
+    marginTop: theme.spacing(1),
+  },
+  addButton: {
+    marginRight: theme.spacing(5),
+  },
+}));
 
 const Register = ({ registerUser, isAuthenticated }) => {
   const [formData, setFormData] = useState({
@@ -13,73 +51,98 @@ const Register = ({ registerUser, isAuthenticated }) => {
     role: "",
     status: "active",
   });
+  const classes = useStyles();
   const { firstname, lastname, email, password, role, status } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = async (e) => {
-    console.log("register button");
     e.preventDefault();
     registerUser(firstname, lastname, email, password, role, status);
   };
 
   //redirect
   return (
-    <Fragment>
-      {" "}
-      <h1 className="large text-primary"> Sign Up </h1>{" "}
-      <p className="lead">
-        <i className="fas fa-user"> </i> Create Your Account{" "}
-      </p>{" "}
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="First Name"
-            name="firstname"
-            value={firstname}
-            onChange={(e) => onChange(e)}
-            required
+    <div className={classes.root}>
+      <Card className={classes.root}>
+        <form className="form" onSubmit={(e) => onSubmit(e)}>
+          <CardHeader
+            subheader="The information can be edited"
+            title="Create Account"
           />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Last Name"
-            name="lastname"
-            value={lastname}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="email"
-            placeholder="Email Address"
-            name="email"
-            value={email}
-            onChange={(e) => onChange(e)}
-            required
-          />
-          <small className="form-text">
-            This site uses Gravatar so if you want a profile image, use a
-            Gravatar email{" "}
-          </small>{" "}
-        </div>{" "}
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Role"
-            name="role"
-            value={role}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <input type="submit" className="btn btn-primary" value="Register" />
-      </form>{" "}
-    </Fragment>
+          <Divider />
+          <CardContent>
+            <div className="form-group">
+              <TextField
+                type="text"
+                name="firstname"
+                value={firstname}
+                onChange={(e) => onChange(e)}
+                required
+                fullWidth
+                helperText="Please specify the first name"
+                label="First name"
+                margin="dense"
+                variant="outlined"
+              />
+            </div>
+            <div className="form-group">
+              <TextField
+                type="text"
+                name="lastname"
+                value={lastname}
+                onChange={(e) => onChange(e)}
+                required
+                fullWidth
+                helperText="Please specify Last Name"
+                label="Last Name"
+                margin="dense"
+                variant="outlined"
+              />
+            </div>
+            <div className="form-group">
+              <TextField
+                type="email"
+                name="email"
+                value={email}
+                onChange={(e) => onChange(e)}
+                required
+                fullWidth
+                helperText="Please specify Email Address"
+                label="Email Address"
+                margin="dense"
+                variant="outlined"
+              />
+            </div>
+            <div className="form-group">
+              <TextField
+                type="text"
+                placeholder="Role"
+                name="role"
+                value={role}
+                onChange={(e) => onChange(e)}
+                required
+                fullWidth
+                helperText="Please specify the Role"
+                label="Role"
+                margin="dense"
+                variant="outlined"
+              />
+            </div>
+
+            <Button
+              className={classes.addButton}
+              color="primary"
+              type="submit"
+              variant="contained"
+            >
+              Register
+            </Button>
+          </CardContent>
+        </form>
+      </Card>
+    </div>
   );
 };
 

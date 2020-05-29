@@ -4,6 +4,7 @@ import user from "./user";
 import course from "./course";
 import alert from "./alert";
 import category from "./category";
+import ui from "./ui";
 
 export default combineReducers({
     auth,
@@ -11,4 +12,5 @@ export default combineReducers({
     course,
     alert,
     category,
+    ui,
 });

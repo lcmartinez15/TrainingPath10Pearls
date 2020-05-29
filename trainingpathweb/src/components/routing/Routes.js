@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import AlertApp from "../general/Alert";
 import LoginPage from "../../pages/LoginPage";
-import ResetPassword from "../../components/auth/ResetPassword";
 import DashboardPage from "../../pages/DashboardPage";
 import Courses from "../../pages/Courses";
 import Users from "../../pages/Users";
@@ -13,14 +12,16 @@ import Register from "../../components/users/Register";
 import RegisterCourse from "../../components/courses/RegisterCourse";
 import RegisCoursesUdemyterCourse from "../../components/udemyCourse/courses";
 import RegisterCategory from "../../components/category/RegisterCategory";
+import EditCategory from "../../components/category/EditCategory";
+import ProfileUser from "../../components/users/Profile";
+import AvailableCourse from "../../components/trainingPath/AvailableCourse";
 
 const Routes = () => {
+  console.log("redireccion ");
   return (
     <section className="container">
       <AlertApp />
       <Switch>
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/reset/:id/:token" component={ResetPassword} />
         <PrivateRoute exact path="/dashboard" component={DashboardPage} />
         <PrivateRoute exact path="/courses" component={Courses} />
         <PrivateRoute exact path="/users" component={Users} />
@@ -31,9 +32,21 @@ const Routes = () => {
         <PrivateRoute exact path="/addCategory" component={RegisterCategory} />
         <PrivateRoute
           exact
+          path="/editCategory/:idCategory"
+          component={EditCategory}
+        />
+        <PrivateRoute
+          exact
           path="/searchCourse"
           component={RegisCoursesUdemyterCourse}
         />
+        <PrivateRoute exact path="/viewUser/:idUser" component={ProfileUser} />
+        <PrivateRoute
+          exact
+          path="/availableCourse/:idUser"
+          component={AvailableCourse}
+        />
+
         {/* <Route component={NotFound} /> */}
       </Switch>
     </section>

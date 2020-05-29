@@ -115,9 +115,8 @@ const Navbar = ({ logout, isAuthenticated, user }) => {
   return (
     <Fragment>
       <AppBar position="static">
-        {" "}
-        {isAuthenticated ? authLinks : guestLinks}{" "}
-      </AppBar>{" "}
+        {isAuthenticated ? authLinks : guestLinks}
+      </AppBar>
     </Fragment>
   );
 };

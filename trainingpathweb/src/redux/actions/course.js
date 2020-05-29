@@ -17,6 +17,7 @@ import {
     UDEMYCHAPTERS_COURSE,
     CLEAR_UDEMUY,
 } from "../constants/types";
+import { formatMs } from "@material-ui/core";
 
 //Get getCourses
 export const getCourses = () => async(dispatch) => {
@@ -60,13 +61,15 @@ export const deleteCourse = (id) => async(dispatch) => {
 };
 
 //Add post
-export const addCourse = (formData) => async(dispatch) => {
+export const addCourse = (formData, chapters) => async(dispatch) => {
     try {
         const config = {
             headers: {
                 "Content-Type": "application/json",
             },
         };
+        console.log(formData);
+        formData = {...formData, chapters }
         console.log(formData);
         const res = await post(urlGetAllCourse, formData, config);
         // //console.log("create profile");

@@ -8,25 +8,28 @@ import { Grid } from "@material-ui/core";
 
 import { getCategories } from "../redux/actions/category";
 
-const CategoryPage = ({ getCategories, category: { categories, loading } }) => {
+const CategoryPage = ({
+  getCategories,
+  category: { categories, loading, history },
+}) => {
   useEffect(() => {
     getCategories();
   }, [getCategories]);
 
   return (
     <Fragment>
-      <h1> Category Page </h1>
-      <Link to="/addCategory"> New Category </Link>{" "}
+      <h1> Category Page </h1> <Link to="/addCategory"> New Category </Link>{" "}
       <Grid container spacing={2}>
+        {" "}
         {!categories ? (
-          <div>..</div>
+          <div> .. </div>
         ) : (
           categories.map((category) => (
             <Grid key={category._id} item>
               <Category key={category._id} category={category} />{" "}
             </Grid>
           ))
-        )}
+        )}{" "}
       </Grid>{" "}
     </Fragment>
   );

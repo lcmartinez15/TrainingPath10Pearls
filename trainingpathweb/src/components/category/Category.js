@@ -1,16 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { getCategory, deleteCategory } from "../../redux/actions/category";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-
+import {
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  Button,
+  Typography,
+} from "@material-ui/core";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -18,24 +20,42 @@ const useStyles = makeStyles({
   },
 });
 
-const Category = ({ auth, category: { _id, name, type }, showActions }) => {
+const Category = ({
+  auth,
+  category: { _id, name, type },
+  history,
+  deleteCategory,
+}) => {
   const classes = useStyles();
+
+  const editCategory = async (e) => {
+    e.preventDefault();
+    console.log("click");
+    //getCategory(_id);
+    history.push("/editCategory/" + _id);
+  };
+  const removeCategory = async (e) => {
+    e.preventDefault();
+    console.log("click");
+    deleteCategory(_id);
+  };
 
   return (
     <Card className={classes.root}>
       <CardActionArea>
         <CardContent className={classes.action}>
           <Typography gutterBottom variant="h5" component="h2">
-            {name} {type}
+            {name}
           </Typography>
+          {type}
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Share
+        <Button size="small" color="primary" onClick={(e) => editCategory(e)}>
+          Edit
         </Button>
-        <Button size="small" color="primary">
-          Learn More
+        <Button size="small" color="primary" onClick={(e) => removeCategory(e)}>
+          Delete
         </Button>
       </CardActions>
     </Card>
@@ -53,4 +73,6 @@ Category.propTypes = {
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, {})(Category);
+export default withRouter(
+  connect(mapStateToProps, { getCategory, deleteCategory })(Category)
+);

@@ -1,23 +1,38 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
-import { addCategory, updateCategory } from "../../redux/actions/category";
+import { updateCategory, getCategory } from "../../redux/actions/category";
 
 import { MenuItem, Select } from "@material-ui/core";
 import PropTypes from "prop-types";
 
-const RegisterCategory = ({
-  addCategory,
+const EditCategory = ({
+  getCategory,
   updateCategory,
   isAuthenticated,
-  category,
+  category: { currentCategory, loading },
+  match,
 }) => {
-  console.log(category);
   const [formData, setFormData] = useState({
     name: "",
     type: "",
+    id: "",
   });
-  const { name, type } = formData;
+
+  useEffect(() => {
+    getCategory(match.params.idCategory);
+
+    // if (currentCategory && Object.keys(currentCategory).length) {
+    if (currentCategory) {
+      setFormData({
+        name: currentCategory.name,
+        type: currentCategory.type,
+        id: currentCategory._id,
+      });
+    }
+  }, [loading, getCategory]);
+
+  const { name, type, id } = formData;
+
   const TYPES = [
     { value: "Programming Language" },
     { value: "Softskill" },
@@ -30,14 +45,17 @@ const RegisterCategory = ({
     { value: "Platforms" },
     { value: "Other" },
   ];
+
   const onChange = (e) => {
     console.log(e.target);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const onSubmit = async (e) => {
+    console.log("register button");
     e.preventDefault();
-    addCategory(formData);
+
+    updateCategory(formData);
   };
 
   //redirect
@@ -46,7 +64,7 @@ const RegisterCategory = ({
       {" "}
       <h1 className="large text-primary"> Category </h1>{" "}
       <p className="lead">
-        <i className="fas fa-user"> </i>Create Category{" "}
+        <i className="fas fa-user"> </i>Edit Category{" "}
       </p>{" "}
       <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className="form-group">
@@ -78,15 +96,21 @@ const RegisterCategory = ({
   );
 };
 
-RegisterCategory.propTypes = {
+EditCategory.propTypes = {
   isAuthenticated: PropTypes.bool,
+  currentCategory: PropTypes.object.isRequired,
+};
+
+EditCategory.defaultProps = {
+  //currentCategory: {},
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  category: state.category.category,
+  category: state.category,
 });
 
-export default connect(mapStateToProps, { addCategory, updateCategory })(
-  RegisterCategory
-);
+export default connect(mapStateToProps, {
+  updateCategory,
+  getCategory,
+})(EditCategory);

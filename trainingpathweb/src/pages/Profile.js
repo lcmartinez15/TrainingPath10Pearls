@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import TrainingPath from "../components/trainingPath/TrainingPath";
 
 const Profile = ({ auth: { isAuthenticated, loading, user } }) => {
   console.log(user);
@@ -13,6 +14,7 @@ const Profile = ({ auth: { isAuthenticated, loading, user } }) => {
         {user.firstname} {user.lastname}
       </h1>
       <h1>{user.role}</h1>
+      <TrainingPath idUser={user._id} />
     </Fragment>
   );
 };
