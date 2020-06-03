@@ -12,10 +12,6 @@ module.exports = function ({ UserTrainingPathController }) {
   );
   router.post("", UserTrainingPathController.create);
   router.patch("/:userTrainingPathId", UserTrainingPathController.update);
-  router.delete(
-    "/:userTrainingPathId",
-    AuthMiddleware,
-    UserTrainingPathController.delete
-  );
+  router.delete("/:userId", UserTrainingPathController.delete);
   return router;
 };

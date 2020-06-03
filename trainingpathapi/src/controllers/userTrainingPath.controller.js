@@ -41,9 +41,11 @@ class UserTrainingPathController {
   }
 
   async delete(req, res) {
-    const { userTrainingPathId } = req.params;
-    const deleteUserTrainingPath = await _userTrainingPathService.deleteLogic(
-      userTrainingPathId
+    const { userId } = req.params;
+    const { coursesId } = req.body;
+    const deleteUserTrainingPath = await _userTrainingPathService.deleteLogicCourse(
+      userId,
+      req.body
     );
     return res.send(deleteUserTrainingPath);
   }

@@ -16,6 +16,13 @@ class UserTrainingPathService extends BaseService {
     return await _userTrainingPathRepository.getAvailableCourses(idUser);
   }
 
+  async deleteLogicCourse(userId, coursesId) {
+    return await _userTrainingPathRepository.deleteLogicCourse(
+      userId,
+      coursesId
+    );
+  }
+
   async CreateOrupdate(id, entity) {
     const result = await _userTrainingPathRepository.getTrainingPathbyUser(id);
     //with courses
