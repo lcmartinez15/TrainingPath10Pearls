@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@material-ui/core";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
     backgroundColor: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -21,9 +21,19 @@ const useStyles = makeStyles({
   img: {
     borderRadius: "50%",
   },
-});
+  avatar: {
+    height: 110,
+    width: 100,
+    flexShrink: 0,
+    flexGrow: 0,
+    marginRight: theme.spacing(1),
+  },
+}));
 
-const User = ({ user: { _id, firstname, lastname, role, email }, history }) => {
+const UserView = ({
+  user: { _id, firstname, lastname, role, email, avatar },
+  history,
+}) => {
   const classes = useStyles();
 
   const viewUser = async (e) => {
@@ -36,23 +46,11 @@ const User = ({ user: { _id, firstname, lastname, role, email }, history }) => {
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <img
-          src="//www.gravatar.com/avatar/8732e79e1e19289908bc22bba1ae38a7?s=200&r=pg&..."
-          alt=""
-          className={classes.img}
-        />{" "}
+        <Avatar className={classes.avatar} src={avatar} />
         <CardContent className={classes.action}>
           <Typography gutterBottom variant="h5" component="h2">
             {" "}
             {firstname} {lastname}{" "}
-          </Typography>{" "}
-          <Typography variant="body2" color="textSecondary" component="p">
-            {" "}
-            {email}{" "}
-          </Typography>{" "}
-          <Typography variant="body2" color="textSecondary" component="p">
-            {" "}
-            {role}{" "}
           </Typography>{" "}
         </CardContent>{" "}
       </CardActionArea>{" "}
@@ -61,10 +59,10 @@ const User = ({ user: { _id, firstname, lastname, role, email }, history }) => {
           View{" "}
         </Button>{" "}
         <Button size="small" color="primary">
-          Learn More{" "}
+          Delete
         </Button>{" "}
       </CardActions>{" "}
     </Card>
   );
 };
-export default withRouter(User);
+export default withRouter(UserView);

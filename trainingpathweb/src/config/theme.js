@@ -54,8 +54,8 @@ const palette = {
     paper: white,
   },
   textSecondary: {
-    primary: colors.white,
-    secondary: colors.white,
+    primary: black,
+    secondary: black,
     link: colors.orange[800],
   },
   icon: colors.blueGrey[600],

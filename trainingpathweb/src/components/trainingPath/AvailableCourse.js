@@ -6,6 +6,8 @@ import TrainingPath from "../trainingPath/TrainingPath";
 import { getAvailableCoursesUser } from "../../redux/actions/users";
 import { addAvailableCoursesUser } from "../../redux/actions/trainingPath";
 
+import { setAlert } from "../../redux/actions/alert";
+
 import Spinner from "../layout/Spinner";
 import CourseItem from "./courseItem";
 import {
@@ -53,6 +55,7 @@ const AvailableCourse = ({
   match,
   getAvailableCoursesUser,
   addAvailableCoursesUser,
+  setAlert,
   user: { availableCourses, loading },
 }) => {
   const classes = useStyles();
@@ -69,9 +72,13 @@ const AvailableCourse = ({
   };
 
   const addCourse = async (e) => {
-    e.preventDefault();
-    addAvailableCoursesUser(checked, match.params.idUser);
-    console.log("click");
+    if (checked.length === 0) {
+      setAlert("Please select one or more courses", "error");
+    } else {
+      e.preventDefault();
+      addAvailableCoursesUser(checked, match.params.idUser);
+      console.log("click");
+    }
   };
 
   return (
@@ -123,4 +130,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getAvailableCoursesUser,
   addAvailableCoursesUser,
+  setAlert,
 })(AvailableCourse);

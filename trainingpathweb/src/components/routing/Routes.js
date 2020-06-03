@@ -13,8 +13,9 @@ import RegisterCourse from "../../components/courses/RegisterCourse";
 import RegisCoursesUdemyterCourse from "../../components/udemyCourse/courses";
 import RegisterCategory from "../../components/category/RegisterCategory";
 import EditCategory from "../../components/category/EditCategory";
-import ProfileUser from "../../components/users/Profile";
+import ProfileUser from "../users/UserDetail";
 import AvailableCourse from "../../components/trainingPath/AvailableCourse";
+import LogProcess from "../logProcess/LogProcess";
 
 const Routes = () => {
   console.log("redireccion ");
@@ -45,6 +46,11 @@ const Routes = () => {
           exact
           path="/availableCourse/:idUser"
           component={AvailableCourse}
+        />
+        <PrivateRoute
+          exact
+          path="/logProcess/:courseId"
+          component={LogProcess}
         />
 
         {/* <Route component={NotFound} /> */}

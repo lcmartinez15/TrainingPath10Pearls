@@ -1,6 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { connect } from "react-redux";
+
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
@@ -32,13 +33,13 @@ const Profile = ({ className, auth: { isAuthenticated, loading, user } }) => {
       {loading || !user ? (
         <Spinner></Spinner>
       ) : (
-        <div className={clsx(classes.root, className)}>
+        <div className={classes.root}>
           <Avatar
             alt="Person"
             className={classes.avatar}
             component={RouterLink}
             src={user.avatar}
-            to="/settings"
+            to="/profile"
           />
           <Typography className={classes.name} variant="h4" color="primary">
             {user.firstname}

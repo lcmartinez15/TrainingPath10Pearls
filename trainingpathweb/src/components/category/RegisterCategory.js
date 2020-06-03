@@ -1,10 +1,50 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
+import { makeStyles } from "@material-ui/styles";
 import { addCategory, updateCategory } from "../../redux/actions/category";
-
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Divider,
+  Grid,
+  InputLabel,
+  TextField,
+} from "@material-ui/core";
 import { MenuItem, Select } from "@material-ui/core";
 import PropTypes from "prop-types";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(3),
+  },
+  content: {
+    marginTop: theme.spacing(2),
+  },
+  pagination: {
+    marginTop: theme.spacing(3),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  spacer: {
+    flexGrow: 1,
+  },
+  row: {
+    height: "42px",
+    display: "flex",
+    alignItems: "center",
+    marginTop: theme.spacing(1),
+  },
+  addButton: {
+    marginRight: theme.spacing(5),
+  },
+  selectControl: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const RegisterCategory = ({
   addCategory,
@@ -12,6 +52,7 @@ const RegisterCategory = ({
   isAuthenticated,
   category,
 }) => {
+  const classes = useStyles();
   console.log(category);
   const [formData, setFormData] = useState({
     name: "",
@@ -42,39 +83,48 @@ const RegisterCategory = ({
 
   //redirect
   return (
-    <Fragment>
-      {" "}
-      <h1 className="large text-primary"> Category </h1>{" "}
-      <p className="lead">
-        <i className="fas fa-user"> </i>Create Category{" "}
-      </p>{" "}
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="name"
-            name="name"
-            value={name}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>{" "}
-        <div className="form-group">
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            name="type"
-            value={type}
-            onChange={(e) => onChange(e)}
-          >
-            {TYPES.map((type) => (
-              <MenuItem value={type.value}>{type.value}</MenuItem>
-            ))}
-          </Select>
-        </div>{" "}
-        <input type="submit" className="btn btn-primary" value="Save" />
-      </form>{" "}
-    </Fragment>
+    <div className={classes.root}>
+      <Card className={classes.root}>
+        <CardHeader title="Create Category" />
+        <Divider />
+        <h1 className="large text-primary"> Category </h1>{" "}
+        <form className="form" onSubmit={(e) => onSubmit(e)}>
+          <div className="form-group">
+            <TextField
+              type="text"
+              placeholder="name"
+              name="name"
+              value={name}
+              onChange={(e) => onChange(e)}
+              required
+              fullWidth
+              helperText="Please specify the category name"
+              label="Category Name"
+              margin="dense"
+              variant="outlined"
+            />
+          </div>{" "}
+          <div className="form-group">
+            <div className={classes.formControl}>
+              <InputLabel id="demo-simple-select-label">type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                name="type"
+                value={type}
+                className={classes.selectControl}
+                onChange={(e) => onChange(e)}
+              >
+                {TYPES.map((type) => (
+                  <MenuItem value={type.value}>{type.value}</MenuItem>
+                ))}
+              </Select>
+            </div>
+          </div>{" "}
+          <input type="submit" className="btn btn-primary" value="Save" />
+        </form>{" "}
+      </Card>
+    </div>
   );
 };
 

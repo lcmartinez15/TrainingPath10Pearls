@@ -13,10 +13,8 @@ import { connect } from "react-redux";
 
 import LoginPage from "./pages/LoginPage";
 import Routes from "../src/components/routing/Routes";
-import Navbar from "../src/components/navbar/Navbar";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 
 import ResetPassword from "../src/components/auth/ResetPassword";
 import Main from "../src/components/layout/Main";

@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import TrainingPath from "../trainingPath/TrainingPath";
+import UserProfile from "./UserProfile";
 import { getUserById, getCoursesUser } from "../../redux/actions/users";
+import { deleteCoursesUser } from "../../redux/actions/trainingPath";
 import Spinner from "../layout/Spinner";
 import {
   Card,
@@ -50,6 +52,7 @@ const ProfileUser = ({
   match,
   getUserById,
   getCoursesUser,
+  deleteCoursesUser,
   user: { user, loading, coursesusers },
   history,
 }) => {
@@ -59,11 +62,25 @@ const ProfileUser = ({
     getCoursesUser(match.params.idUser);
   }, [getUserById, getCoursesUser]);
 
+  const [deleteChecked, setCheckedCourses] = React.useState([]);
+
+  const handleChange = (id) => {
+    setCheckedCourses([...deleteChecked, id]);
+    console.log(deleteChecked);
+  };
+
   const addCourse = async (e) => {
     e.preventDefault();
     console.log("click");
     //getCategory(_id);
     history.push("/availableCourse/" + user._id);
+  };
+
+  const removeCourse = async (e) => {
+    e.preventDefault();
+    console.log("click");
+    deleteCoursesUser(user._id, deleteChecked);
+    // history.push("/availableCourse/" + user._id);
   };
 
   if (loading || !user) {
@@ -74,15 +91,9 @@ const ProfileUser = ({
     <div className={classes.root}>
       <Card className={classes.content}>
         <CardContent>
-          <Grid container spacing={1}>
-            <Avatar className={classes.avatar} src={user.avatar} />
-            <Grid item md={6} xs={12}>
-              <Typography gutterBottom variant="h2">
-                {user.firstname} {user.lastname}
-              </Typography>{" "}
-              <Typography variant="body1">{user.email}</Typography>{" "}
-              <Typography variant="body1">{user.role}</Typography>{" "}
-            </Grid>
+          <Grid>
+            <UserProfile user={user} />
+
             <Grid item md={4} xs={4}>
               <div className={classes.row}>
                 <Button
@@ -95,11 +106,24 @@ const ProfileUser = ({
                 >
                   Courses
                 </Button>
+                <Button
+                  className={classes.addButton}
+                  color="primary"
+                  variant="contained"
+                  onClick={(e) => {
+                    removeCourse(e);
+                  }}
+                >
+                  Remove Courses
+                </Button>
               </div>
             </Grid>
           </Grid>
 
-          <TrainingPath courses={coursesusers.courses} />
+          <TrainingPath
+            onCheckedDelete={handleChange}
+            courses={coursesusers.courses}
+          />
         </CardContent>
       </Card>
     </div>
@@ -111,6 +135,8 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { getUserById, getCoursesUser })(
-  ProfileUser
-);
+export default connect(mapStateToProps, {
+  getUserById,
+  getCoursesUser,
+  deleteCoursesUser,
+})(ProfileUser);

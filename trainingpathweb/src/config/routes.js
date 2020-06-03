@@ -11,3 +11,5 @@ export const urlAddUser = `${settings.urlBase}Auth/signup`;
 
 export const urlCategory = `${settings.urlBase}Category`;
 export const urlTrainingPathUser = `${settings.urlBase}userTrainingPathRoutes`;
+
+export const urlLogProcess = `${settings.urlBase}logProcess`;

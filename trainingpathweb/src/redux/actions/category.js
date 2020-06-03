@@ -1,4 +1,3 @@
-import axios from "axios";
 import { post, get, update, remove } from "../../utils/access";
 import { urlCategory } from "../../config/routes";
 import { setAlert } from "./alert";

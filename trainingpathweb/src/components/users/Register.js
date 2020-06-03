@@ -67,10 +67,7 @@ const Register = ({ registerUser, isAuthenticated }) => {
     <div className={classes.root}>
       <Card className={classes.root}>
         <form className="form" onSubmit={(e) => onSubmit(e)}>
-          <CardHeader
-            subheader="The information can be edited"
-            title="Create Account"
-          />
+          <CardHeader title="Create Account" />
           <Divider />
           <CardContent>
             <div className="form-group">

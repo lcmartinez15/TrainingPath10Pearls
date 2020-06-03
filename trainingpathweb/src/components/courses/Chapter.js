@@ -1,91 +1,133 @@
 import React, { Fragment, useState } from "react";
 import { connect } from "react-redux";
+import { makeStyles } from "@material-ui/styles";
 import { Link, Redirect } from "react-router-dom";
-import { registerUser } from "../../redux/actions/users";
+import { addLogProcess } from "../../redux/actions/logProcess";
 import PropTypes from "prop-types";
+import MaterialTable from "material-table";
+import { FormControlLabel, Switch } from "@material-ui/core";
 
-const Chapters = ({ udemycourse }) => {
-  const [formData, setFormData] = useState({
-    category: "",
-    title: udemycourse ? udemycourse.title : "",
-    link: udemycourse ? udemycourse.url : "",
-    time: "tempo",
-  });
-  const { category, title, link, time } = formData;
+const useStyles = makeStyles((theme) => ({}));
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+const Chapters = ({
+  logProcess,
+  chaptersCurrentCourse,
+  user,
+  addLogProcess,
+}) => {
+  console.log("chapters", logProcess, chaptersCurrentCourse);
+  const classes = useStyles();
+  const [chapters, setFormDatachapters] = useState([]);
+  const [checked, setChecked] = useState(true);
+  const [chaptersCourse, setChaptersCourse] = useState([chaptersCurrentCourse]);
+  const [logProcessUser, setLogProcessUser] = useState([logProcess]);
 
-  const onSubmit = async (e) => {
-    console.log("register button");
-    e.preventDefault();
-    //registerCourse(firstname, lastname, email, password, role, status);
+  const columns = [
+    { title: "Name", field: "chapterRef.name" },
+    { title: "Status", field: "status" },
+    { title: "Date", field: "date" },
+    { title: "time", field: "chapterRef.time" },
+    { title: "percentage", field: "chapterRef.percentage" },
+  ];
+  const columnsPending = [
+    { title: "Name", field: "name" },
+    { title: "time", field: "time" },
+    { title: "percentage", field: "percentage" },
+  ];
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
   };
 
   //redirect
   return (
-    <Fragment>
-      {" "}
-      <h1 className="large text-primary"> Course </h1>{" "}
-      <p className="lead">
-        <i className="fas fa-user"> </i>Create course{" "}
-      </p>{" "}
-      <Link to="/searchCourse"> Search Course Udemy </Link>{" "}
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Category"
-            name="category"
-            value={category}
-            onChange={(e) => onChange(e)}
-            required
+    <div className={classes.root}>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={checked}
+            onChange={handleChange}
+            name="checkedB"
+            color="primary"
           />
-        </div>{" "}
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Title"
-            name="title"
-            value={title}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>{" "}
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Time"
-            name="time"
-            value={time}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>{" "}
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="Link"
-            name="link"
-            value={link}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>{" "}
-        <input type="submit" className="btn btn-primary" value="Save" />
-      </form>{" "}
-    </Fragment>
+        }
+        label="Primary"
+      />
+      <div hidden={checked ? false : true}>
+        {chapters ? (
+          <MaterialTable
+            title="Log Process"
+            columns={columns}
+            data={logProcess}
+            editable={{
+              onRowUpdate: (newData, oldData) =>
+                new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve();
+                    if (oldData) {
+                      const newChapters = [...chapters];
+                      newChapters[newChapters.indexOf(oldData)] = newData;
+                      setFormDatachapters(newChapters);
+                    }
+                  }, 600);
+                }),
+
+              onRowDelete: (oldData) =>
+                new Promise((resolve, reject) => {
+                  setTimeout(() => {
+                    resolve();
+                    if (oldData) {
+                      const data = [...chapters];
+                      data.splice(data.indexOf(oldData), 1);
+                      setFormDatachapters(data);
+                    }
+                  }, 600);
+                }),
+            }}
+          ></MaterialTable>
+        ) : (
+          <div> no chapters found </div>
+        )}
+      </div>
+      <div hidden={checked ? true : false}>
+        {chapters ? (
+          <MaterialTable
+            title="Pending Chapters"
+            actions={[
+              {
+                icon: "add",
+                tooltip: "Add to Log Process",
+                onClick: (event, rowData) => {
+                  console.log(rowData);
+                  addLogProcess(rowData, user);
+                },
+              },
+            ]}
+            columns={columnsPending}
+            data={chaptersCurrentCourse}
+          ></MaterialTable>
+        ) : (
+          <div> no chapters found </div>
+        )}
+      </div>
+
+      <input type="submit" className="btn btn-primary" value="Save" />
+    </div>
   );
+};
+
+Chapters.defaultProps = {
+  chaptersCourse: [],
 };
 
 Chapters.propTypes = {
   isAuthenticated: PropTypes.bool,
-  udemycourse: PropTypes.object,
+  //udemycourse: PropTypes.object,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  udemycourse: state.course.udemycourse,
+  user: state.auth.user,
 });
 
-export default connect(mapStateToProps, {})(Chapters);
+export default connect(mapStateToProps, { addLogProcess })(Chapters);

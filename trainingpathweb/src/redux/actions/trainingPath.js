@@ -12,7 +12,7 @@ import {
   urlAddUser,
   urlTrainingPathUser,
 } from "../../config/routes";
-import { post, get, update } from "../../utils/access";
+import { post, remove, update } from "../../utils/access";
 import { setAlert } from "./alert";
 import { redirect } from "./ui";
 
@@ -40,8 +40,32 @@ export const addAvailableCoursesUser = (formData, id) => async (dispatch) => {
   const res = await update(`${urlTrainingPathUser}/${id}`, data, config);
   if (res.data) {
     try {
-      dispatch(setAlert("Category updated", "success"));
+      dispatch(setAlert("Changes saved successfully", "success"));
       dispatch(redirect("/viewUser/" + id));
+    } catch (error) {
+      console.log("error " + error);
+    }
+  } else {
+    dispatch({
+      type: USER_ERROR,
+    });
+    // dispatch(setAlert(res.message, "error"));
+  }
+};
+
+// get all users
+export const deleteCoursesUser = (idUser, coursesList) => async (dispatch) => {
+  console.log("id user", coursesList);
+
+  const res = await remove(`${urlTrainingPathUser}/${idUser}`, coursesList);
+  console.log(res.data);
+  if (res.data) {
+    try {
+      dispatch(setAlert("Courses deleted", "success"));
+      dispatch({
+        type: GET_COURSES_USER,
+        payload: res.data,
+      });
     } catch (error) {
       console.log("error " + error);
     }

@@ -51,7 +51,6 @@ const RegisterCourse = ({
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     addCourse(formData, chapters);
   };
 
