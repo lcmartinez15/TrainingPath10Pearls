@@ -1,11 +1,14 @@
 const BaseRepository = require("./base.repository");
 let _userTrainingPath = null;
 let _course = null;
+let _chapter = null;
+
 class UserTrainingPathRepository extends BaseRepository {
-  constructor({ UserTrainingPath, Course }) {
-    super(UserTrainingPath, Course);
+  constructor({ UserTrainingPath, Course, Chapter }) {
+    super(UserTrainingPath, Course, Chapter);
     _userTrainingPath = UserTrainingPath;
     _course = Course;
+    _chapter = Chapter;
   }
 
   async getUsersTrainingPath() {
@@ -16,6 +19,8 @@ class UserTrainingPathRepository extends BaseRepository {
   }
 
   async getTrainingPathbyUser(idUser) {
+    //get percentage of work
+
     var resultTemp = await _userTrainingPath
       .findOne({ user: idUser })
       .populate("user")
@@ -29,6 +34,7 @@ class UserTrainingPathRepository extends BaseRepository {
         (course) => !course.isDeleted
       );
     }
+    console.log("trainign path",resultTemp);   
 
     return resultTemp;
   }
@@ -107,6 +113,32 @@ class UserTrainingPathRepository extends BaseRepository {
     });
 
     return await this.getTrainingPathbyUser(userId);
+  }
+
+  async updatedTrainigPath(entity) {
+    //get chapter
+    const chapterUdated = await _chapter.findOne({ _id: entity.chapterRef });
+    // get current courses of user
+    const trainingPath = await _userTrainingPath.findOne({
+      user: entity.userRef,
+    });
+
+    const ListCurrentCourses = trainingPath.courses.map((course) => {
+      if (course.courseRef !== null && course.courseRef !== undefined) {
+        if (course.courseRef.toString() === chapterUdated.course.toString()) {
+          course.percentage =
+            Number(course.percentage) + Number(chapterUdated.percentage);
+        }
+      }
+      return course;
+    });
+
+    // add new courses
+    trainingPath.courses = ListCurrentCourses;
+
+    return await this.model.findByIdAndUpdate(trainingPath.id, trainingPath, {
+      new: true,
+    });
   }
 }
 

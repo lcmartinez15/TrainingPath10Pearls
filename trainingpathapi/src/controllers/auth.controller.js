@@ -24,6 +24,14 @@ class AuthController {
         const createdUser = await _authService.getById(req.user.id);
         return res.status(201).send(createdUser);
     }
+
+    async resetPassword(req, res) {
+        const { body } = req;
+        const { user, password } = body;
+        console.log("controller resetPassword -" + password);
+        const createdUser = await _authService.resetPassword(password,user);
+        return res.status(201).send(createdUser);
+    }
 }
 
 module.exports = AuthController;

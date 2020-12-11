@@ -6,6 +6,6 @@ module.exports = function({ AuthController }) {
     router.get("/", AuthMiddleware, AuthController.getUser);
     router.post("/signup", AuthController.signUp);
     router.post("/signin", AuthController.signIn);
-
+    router.post("/resetPassword", AuthController.resetPassword);
     return router;
 };

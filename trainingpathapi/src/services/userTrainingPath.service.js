@@ -23,6 +23,11 @@ class UserTrainingPathService extends BaseService {
     );
   }
 
+  async updatedTrainigPath(createdLogProcess) {
+    return await _userTrainingPathRepository.updatedTrainigPath(
+      createdLogProcess
+    );
+  }
   async CreateOrupdate(id, entity) {
     const result = await _userTrainingPathRepository.getTrainingPathbyUser(id);
     //with courses

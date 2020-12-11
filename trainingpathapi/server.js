@@ -16,4 +16,4 @@ mongoose
         console.log("db connected");
         server.start();
     })
-    .catch(console.log);
+    .catch((e)=>{console.log("error",e)});

@@ -5,7 +5,11 @@ const LogProcessSchema = new Schema({
   status: {
     type: String,
   },
-  date: {
+  startDate: {
+    type: Date,
+    default: Date.now,
+  },
+  endDate: {
     type: Date,
     default: Date.now,
   },

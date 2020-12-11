@@ -1,8 +1,10 @@
 let _logProcessService = null;
+let _userTrainingPathService = null;
 
 class LogProcessController {
-  constructor({ LogProcessService }) {
+  constructor({ LogProcessService, UserTrainingPathService }) {
     _logProcessService = LogProcessService;
+    _userTrainingPathService = UserTrainingPathService;
   }
 
   async get(req, res) {
@@ -15,6 +17,10 @@ class LogProcessController {
     const { body } = req;
     console.log("controller LogProcess " + body);
     const createdLogProcess = await _logProcessService.create(body);
+    //Update Training path
+    const updatedTrainigPath = await _userTrainingPathService.updatedTrainigPath(
+      createdLogProcess
+    );
     return res.status(201).send(createdLogProcess);
   }
 
@@ -27,6 +33,8 @@ class LogProcessController {
   async update(req, res) {
     const { body } = req;
     const { logProcessId } = req.params;
+
+    console.log("log process", body);
     const updateLogProcess = await _logProcessService.update(
       logProcessId,
       body

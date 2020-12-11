@@ -54,7 +54,7 @@ UserSchema.methods.comparePasswords = function(password) {
 };
 
 UserSchema.pre("save", async function(next) {
-    console.log("save user" + this);
+    console.log("hook save user" + this);
     const user = this;
 
     const avatar = gravatar.url(user.email, {
@@ -71,6 +71,21 @@ UserSchema.pre("save", async function(next) {
     const salt = genSaltSync(10);
     const hashedPassword = hashSync(user.password, salt);
     user.password = hashedPassword;
+    next();
+});
+
+UserSchema.pre("findOneAndUpdate", async function(next) {
+    console.log("hook update user" + this);
+    const user = this;
+
+    console.log(" user" + this._update.status);
+   
+
+
+    const salt = genSaltSync(10);
+    const hashedPassword = hashSync(this._update.password, salt);
+    this._update.password= hashedPassword;
+    console.log("updated password");
     next();
 });
 

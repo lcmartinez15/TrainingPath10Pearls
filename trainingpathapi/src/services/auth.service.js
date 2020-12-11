@@ -2,10 +2,13 @@ const { generateToken } = require("../helpers/jwt.helper");
 const { sendEmail } = require("../helpers/email-helper");
 
 let _userService = null;
+let _userRepository = null;
+
 
 class AuthService {
-    constructor({ UserService }) {
+    constructor({ UserService, UserRepository }) {
         _userService = UserService;
+        _userRepository = UserRepository;
     }
 
     async signUp(user) {
@@ -41,14 +44,14 @@ class AuthService {
             const error = new Error();
             error.status = 404;
             error.message =
-                "The fields entered does not match in our records, please validate and try again";
+                "This user doesn´t exist";
             throw error;
         }
         if (userExist.status == "inactive") {
             const error = new Error();
             error.status = 404;
             error.message =
-                "The fields entered does not match in our records, please validate and try again";
+                "Inactive user";
             throw error;
         }
 
@@ -57,7 +60,7 @@ class AuthService {
             const error = new Error();
             error.status = 400;
             error.message =
-                "The fields entered does not match in our records, please validate and try again";
+                "Incorrect Password";
             throw error;
         }
 
@@ -74,6 +77,19 @@ class AuthService {
     async getById(id) {
         console.log("service signin " + id);
         return await _userService.get(id);
+    }
+
+
+    async resetPassword(password,user){
+        console.log("service", user);
+
+        const currentUser= _userService.get(user);
+        currentUser.password= password;
+        currentUser.status = "active"
+
+        const result= await _userService.update(user, currentUser);
+        console.log(result);
+        return await result;
     }
 }
 
