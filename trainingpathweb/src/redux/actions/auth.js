@@ -4,9 +4,10 @@ import {
   USER_LOADED,
   USER_ERROR,
 } from "../constants/types";
-import { urlAuth, urlLoadUser } from "../../config/routes";
+import { urlAuth, urlLoadUser, urlResetPassword } from "../../config/routes";
 import { get, post, setAuthToken } from "../../utils/access";
 import { setAlert } from "./alert";
+import { redirect } from "./ui";
 
 //Login
 export const login = (email, password) => async (dispath) => {
@@ -66,4 +67,28 @@ export const loadUser = () => async (dispatch) => {
       type: USER_ERROR,
     });
   }
+};
+
+
+export const resetPassword = (user,password) => async (dispatch) => {
+  console.log("reset user ", user);
+  
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+ const body = JSON.stringify({user, password });
+   const res = await post(urlResetPassword, body, config);
+   if (res.data)
+   {
+    dispatch(setAlert("Password updated", "success"));
+    dispatch(redirect("/login"));
+  } else {
+    dispatch({
+      type: USER_ERROR,
+    });
+    dispatch(setAlert(res.message, "error"));
+  }
+ 
 };

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import Login from "../components/auth/Login";
+import ResetPassword from "../components/auth/ResetPassword";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -91,7 +91,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage = () => {
+const ResetPasswordPage = ({ setAlert, resetPassword, isAuthenticated, match }) => {
+    console.log("reset password page");
+    console.log(match.params.id);
+  console.log(match.params.token);
   const classes = useStyles();
   return (
     <Grid container className={classes.root}>
@@ -113,11 +116,11 @@ const LoginPage = () => {
           </Paper>
         </Grid>
         <Grid key={2} item>
-          <Login />
+          <ResetPassword user={match.params.id} token={match.params.token} />
         </Grid>
       </Grid>
     </Grid>
   );
 };
 
-export default LoginPage;
+export default ResetPasswordPage;

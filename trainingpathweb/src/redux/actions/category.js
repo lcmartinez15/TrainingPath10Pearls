@@ -10,6 +10,7 @@ import {
   GET_CATEGORY,
   UPDATE_CATEGORY,
 } from "../constants/types";
+import createBreakpoints from "@material-ui/core/styles/createBreakpoints";
 
 //Get getCourses
 export const getCategories = () => async (dispatch) => {
@@ -109,7 +110,7 @@ export const deleteCategory = (id) => async (dispatch) => {
 export const getCategory = (id) => async (dispatch) => {
   try {
     const res = await get(`${urlCategory}/${id}`);
-
+console.log(res.data);
     dispatch({
       type: GET_CATEGORY,
       payload: res.data,

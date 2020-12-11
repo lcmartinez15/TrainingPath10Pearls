@@ -34,6 +34,7 @@ export const addAvailableCoursesUser = (formData, id) => async (dispatch) => {
       courseRef: id,
       status: "started",
       isDeleted: "false",
+      percentage: 0,
     });
   });
   console.log(data);

@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
+import Visibility from "@material-ui/icons/Visibility";
+import Delete from "@material-ui/icons/Delete";
 import { withRouter } from "react-router-dom";
 import {
   Card,
@@ -11,12 +12,18 @@ import {
   CardMedia,
   Button,
   Typography,
+  Box, 
+  IconButton
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    width: 200,
+    height:250,
     backgroundColor: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+  },
+  content:{
+    height:170,
   },
   img: {
     borderRadius: "50%",
@@ -44,23 +51,29 @@ const UserView = ({
   };
 
   return (
+    
     <Card className={classes.root}>
-      <CardActionArea>
-        <Avatar className={classes.avatar} src={avatar} />
-        <CardContent className={classes.action}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {" "}
-            {firstname} {lastname}{" "}
-          </Typography>{" "}
+  <CardContent className={classes.content}>
+      <Box display="flex" justifyContent="center" m={1} p={1} bgcolor="background.paper">
+      <Avatar className={classes.avatar} src={avatar} />
+        </Box>       
+      
+          <Typography gutterBottom variant="h5" component="h2">           
+            {firstname} {lastname}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="h2">           
+            {role}
+          </Typography>
         </CardContent>{" "}
-      </CardActionArea>{" "}
+  
       <CardActions>
-        <Button size="small" color="primary" onClick={(e) => viewUser(e)}>
-          View{" "}
-        </Button>{" "}
-        <Button size="small" color="primary">
-          Delete
-        </Button>{" "}
+        <IconButton aria-label="view User data" onClick={(e) => viewUser(e)}>
+          <Visibility/>
+        </IconButton>
+        <IconButton aria-label="delete user" onClick={(e) => viewUser(e)}>
+          <Delete/>
+        </IconButton>
+       
       </CardActions>{" "}
     </Card>
   );

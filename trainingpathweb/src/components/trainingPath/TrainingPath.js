@@ -56,10 +56,12 @@ const TrainingPath = ({ onCheckedDelete, idUser, courses }) => {
                   to={`/logProcess/${course.courseRef._id}`}
                   variant="body2"
                 >
-                  {course.courseRef ? course.courseRef.title : ""}: 70%
+                  {course.courseRef
+                    ? ` ${course.courseRef.title} -  ${course.percentage}%`
+                    : ""}
                 </Link>
               </Typography>
-              <LinearProgress value={70} variant="determinate" />
+              <LinearProgress value={course.percentage} variant="determinate" />
             </div>
           );
         })

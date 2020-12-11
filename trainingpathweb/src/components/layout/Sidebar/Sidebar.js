@@ -1,4 +1,6 @@
 import React from "react";
+import { Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/styles";
@@ -33,11 +35,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   root: {
-    backgroundColor: "#363636",
     display: "flex",
     flexDirection: "column",
     height: "100%",
     padding: theme.spacing(2),
+    background: "linear-gradient(25deg, #607D8B 0%, #3A454A  100%)", //"url(logobanner.png)",
+    backgroundRepeat: "no-repeat",
+    backgroundColor:
+      theme.palette.type === "light"
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: "cover",
   },
   divider: {
     margin: theme.spacing(2, 0),
@@ -47,12 +55,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Sidebar = (props) => {
-  const { open, variant, onClose, className, ...rest } = props;
-
+const Sidebar = ({ open, variant, onClose, className,auth: { isAuthenticated, loading, user }, ...rest }) => {
+  
+console.log(user);
   const classes = useStyles();
 
-  const pages = [
+  const pagesAdmin = [
     {
       title: "Dashboard",
       href: "/dashboard",
@@ -75,6 +83,19 @@ const Sidebar = (props) => {
     },
   ];
 
+  const pages = [
+    {
+      title: "Dashboard",
+      href: "/userdashboard",
+      icon: <Dashboard />,
+    },
+    {
+      title: "Courses",
+      href: "/courses",
+      icon: <LocalLibrary />,
+    },
+  ];
+
   return (
     <Drawer
       anchor="left"
@@ -86,7 +107,7 @@ const Sidebar = (props) => {
       <div {...rest} className={clsx(classes.root, className)}>
         <Profile />
         <Divider className={classes.divider} />
-        <SidebarNav className={classes.nav} pages={pages} />
+        <SidebarNav className={classes.nav} pages={user && user.role==="admin" ? pagesAdmin:pages} />
       </div>
     </Drawer>
   );
@@ -97,6 +118,11 @@ Sidebar.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool.isRequired,
   variant: PropTypes.string.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
-export default Sidebar;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Sidebar);

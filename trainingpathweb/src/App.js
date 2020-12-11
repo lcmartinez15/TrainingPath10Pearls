@@ -17,6 +17,7 @@ import Routes from "../src/components/routing/Routes";
 import { makeStyles } from "@material-ui/core/styles";
 
 import ResetPassword from "../src/components/auth/ResetPassword";
+import ResetPasswordPage from "../src/pages/ResetPasswordPage";
 import Main from "../src/components/layout/Main";
 import store from "./redux/store";
 
@@ -53,7 +54,7 @@ const App = ({ redirectTo, loadUser, redirectClear, history }) => {
       <Switch>
         <Route exact path="/" component={LoginPage} />{" "}
         <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/reset/:id/:token" component={ResetPassword} />
+        <Route exact path="/reset/:id/:token" component={ResetPasswordPage} />
         <Main>
           <Route component={Routes} />{" "}
         </Main>

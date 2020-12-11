@@ -14,23 +14,35 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    width: 200,
+    height:250,
     backgroundColor: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+  },
+  content:{
+    height:170,
   },
 });
 
-const Course = ({ auth, course: { _id, title, link, time }, showActions }) => {
+const Course = ({ auth, course: { _id, title, link, time, img }, showActions }) => {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        <CardContent className={classes.action}>
-          <Typography gutterBottom variant="h5" component="h2">
+     
+        <CardContent className={classes.content}>
+        <CardMedia
+          component="img"
+          alt="Contemplative Reptile"
+          height="140"
+          image={img}
+          title="Contemplative Reptile"
+        />
+          <Typography gutterBottom variant="h5" component="h3">
             {" "}
             {title}{" "}
           </Typography>{" "}
         </CardContent>{" "}
-      </CardActionArea>{" "}
+      
       <CardActions>
         <Button size="small" color="primary">
           Share{" "}

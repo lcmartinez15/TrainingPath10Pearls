@@ -7,9 +7,9 @@ import {
   Card,
   CardHeader,
   CardContent,
-  CardActions,
+  FormControl,
   Divider,
-  Grid,
+  Button,
   InputLabel,
   TextField,
 } from "@material-ui/core";
@@ -38,11 +38,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginTop: theme.spacing(1),
   },
-  addButton: {
+  saveButton: {
     marginRight: theme.spacing(5),
+    marginTop: theme.spacing(2),
   },
   selectControl: {
     marginTop: theme.spacing(2),
+  },
+  formControl: {
+    display: "flex",
   },
 }));
 
@@ -85,43 +89,60 @@ const RegisterCategory = ({
   return (
     <div className={classes.root}>
       <Card className={classes.root}>
-        <CardHeader title="Create Category" />
-        <Divider />
-        <h1 className="large text-primary"> Category </h1>{" "}
         <form className="form" onSubmit={(e) => onSubmit(e)}>
-          <div className="form-group">
-            <TextField
-              type="text"
-              placeholder="name"
-              name="name"
-              value={name}
-              onChange={(e) => onChange(e)}
-              required
-              fullWidth
-              helperText="Please specify the category name"
-              label="Category Name"
-              margin="dense"
-              variant="outlined"
-            />
-          </div>{" "}
-          <div className="form-group">
-            <div className={classes.formControl}>
-              <InputLabel id="demo-simple-select-label">type</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                name="type"
-                value={type}
-                className={classes.selectControl}
+          <CardHeader title="Create Category" />
+          <Divider />
+          <CardContent>
+            <div className="form-group">
+              <TextField
+                type="text"
+                placeholder="name"
+                name="name"
+                value={name}
                 onChange={(e) => onChange(e)}
+                required
+                fullWidth
+                helperText="Please specify the category name"
+                label="Category Name"
+                margin="dense"
+                variant="outlined"
+              />
+            </div>{" "}
+            <div className="form-group">
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel
+                  className={classes.inputLabel}
+                  id="demo-simple-select-outlined-label"
+                >
+                  Type Category
+                </InputLabel>
+                <Select
+                  required
+                  name="type"
+                  value={type}
+                  fullWidth
+                  label="Type"
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  onChange={(e) => onChange(e)}
+                >
+                  {TYPES.map((type) => (
+                    <MenuItem value={type.value}>{type.value}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>{" "}
+            <div className="form-group">
+              <Button
+                className={classes.saveButton}
+                color="primary"
+                type="submit"
+                variant="contained"
               >
-                {TYPES.map((type) => (
-                  <MenuItem value={type.value}>{type.value}</MenuItem>
-                ))}
-              </Select>
+                Save
+              </Button>
             </div>
-          </div>{" "}
-          <input type="submit" className="btn btn-primary" value="Save" />
+          </CardContent>
         </form>{" "}
       </Card>
     </div>

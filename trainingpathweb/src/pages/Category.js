@@ -2,7 +2,15 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/styles";
-import { Grid, Button } from "@material-ui/core";
+import { Grid, Button, Box } from "@material-ui/core";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Divider,  
+  TextField,
+} from "@material-ui/core";
 
 //Components
 import Category from "../components/category/Category";
@@ -33,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2)
   },
   addButton: {
     marginRight: theme.spacing(5),
@@ -59,11 +68,15 @@ const CategoryPage = ({
   }
 
   return (
-    <div className={classes.content}>
-      <h1> Category Page </h1>
-      <Filter />
-      <div className={classes.row}>
-        <Button
+<div className={classes.root}>
+      <Card className={classes.root}>
+       
+        <CardHeader title="Category Page" />
+        <Divider />
+        <CardContent>
+ {/* <Filter /> */}
+ <Box display="flex" flexDirection="row-reverse" p={1} m={1} bgcolor="background.paper">
+ <Button
           className={classes.addButton}
           color="primary"
           variant="contained"
@@ -71,8 +84,8 @@ const CategoryPage = ({
         >
           Add Category
         </Button>
-      </div>
-      <Grid container spacing={2}>
+          </Box>
+          <Grid container spacing={2}>
         {!categories ? (
           <div> .. </div>
         ) : (
@@ -83,7 +96,12 @@ const CategoryPage = ({
           ))
         )}
       </Grid>
-    </div>
+        </CardContent>
+        </Card>
+        </div>
+
+     
+   
   );
 };
 

@@ -4,15 +4,16 @@ import { colors } from "@material-ui/core";
 
 const white = "#FFFFFF";
 const black = "#000000";
+const pearlsPrimary = "#212121";
 
 const palette = {
   black,
   white,
   primary: {
     contrastText: white,
-    dark: colors.orange[800],
-    main: colors.orange[500],
-    light: colors.orange[100],
+    dark: colors.grey[800],
+    main: colors.grey[900],
+    light: colors.grey[100],
   },
   secondary: {
     contrastText: white,
@@ -58,13 +59,13 @@ const palette = {
     secondary: black,
     link: colors.orange[800],
   },
-  icon: colors.blueGrey[600],
+  icon: colors.blueGrey[500],
   divider: colors.grey[200],
 };
 
 const typography = {
   h1: {
-    color: palette.text.primary,
+    color: palette.text.secondary,
     fontWeight: 500,
     fontSize: "55px",
     letterSpacing: "-0.24px",
@@ -106,9 +107,10 @@ const typography = {
     lineHeight: "20px",
   },
   subtitle1: {
-    color: palette.text.primary,
-    fontSize: "16px",
-    letterSpacing: "-0.05px",
+    color: palette.text.secondary,
+    fontSize: "120px",
+    fontWeight: 800,
+    letterSpacing: "-8px",
     lineHeight: "25px",
   },
   subtitle2: {

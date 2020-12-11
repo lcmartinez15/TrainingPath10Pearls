@@ -8,30 +8,57 @@ import SaveIcon from "@material-ui/icons/Save";
 import { Container, Button, Input } from "@material-ui/core";
 import GridContainer from "../grid/GridContainer.js";
 import GridItem from "../grid/GridItem.js";
-import { login } from "../../redux/actions/auth";
+import { resetPassword } from "../../redux/actions/auth";
 import { setAlert } from "../../redux/actions/alert";
+import {
+  Avatar,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Paper,
+  Grid,
+  colors,
+  InputAdornment,
+} from "@material-ui/core";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import AccountCircle from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(1),
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "80vh",
+    width: "40vw",
+    border: "7rem",
   },
-  container: {
-    background: withRouter,
+
+  icon: {
+    fontSize: 70,
+    color: theme.palette.icon,
   },
-  root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(3),
-      width: "25ch",
-    },
+  form: {
+    width: "60%", // Fix IE 11 issue.
+    margin: theme.spacing(3, 3, 3, 3),
+  },
+  input: {
+    //backgroundColor: "",
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
   },
 }));
 
-const ResetPassword = ({ setAlert, resetPassword, isAuthenticated, match }) => {
-  console.log(match.params.id);
-  console.log(match.params.token);
+const ResetPassword = ({user,token, setAlert, resetPassword, isAuthenticated, match }) => {
+  console.log(user);
+  console.log(token);
   const [formData, setFormData] = useState({
     password: "",
     confirmPassword: "",
+    user:user,
+    token: token
   });
   const { password, confirmPassword } = formData;
   const classes = useStyles();
@@ -47,61 +74,70 @@ const ResetPassword = ({ setAlert, resetPassword, isAuthenticated, match }) => {
       console.log("password errorr");
       setAlert("password doesn't coincide", "error");
     } else {
-      resetPassword(password);
+      resetPassword(user, password);
     }
   };
 
-  if (isAuthenticated) return <Redirect to="/dashboard" />;
+   if (isAuthenticated) return <Redirect to="/dashboard" />;
 
-  return (
-    <Fragment>
-      <GridContainer justify="center">
-        <GridItem>
-          <h1> Reset password </h1>{" "}
-          <form onSubmit={(e) => onSubmit(e)} className={classes.root}>
-            <div>
-              <Input
-                type="password"
-                placeholder="password"
-                inputProps={{ "aria-label": "description" }}
-                name="password"
-                value={password}
-                onChange={(e) => onChange(e)}
-              />{" "}
-            </div>{" "}
-            <div>
-              <Input
-                type="password"
-                placeholder="Confirm password"
-                inputProps={{ "aria-label": "description" }}
-                name="confirmPassword"
-                value={confirmPassword}
-                onChange={(e) => onChange(e)}
-              />{" "}
-            </div>{" "}
-            <Button
-              type="submit"
-              value="Login"
-              color="primary"
-              size="large"
-              className={classes.button}
-              startIcon={<SaveIcon />}
-            >
-              Reset{" "}
-            </Button>{" "}
-          </form>{" "}
-        </GridItem>{" "}
-      </GridContainer>{" "}
-    </Fragment>
-  );
-};
+    return (
+      <Paper className={classes.paper}>
+        <LockOutlinedIcon className={classes.icon} />
+  
+        <Typography variant="h2">Reset password</Typography>
+        <form
+          className={classes.form}
+          noValidate
+          autoComplete="off"
+          onSubmit={(e) => onSubmit(e)}
+        >
+          <TextField
+            // variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="input-with-icon-grid"
+            label="password"
+            name="password"
+            onChange={(e) => onChange(e)}
+            value={password}
+          />
+          <TextField
+            //variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="confirmPassword"
+            label="confirmPassword"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => onChange(e)}
+            id="password"
+            autoComplete="current-password"
+          />
+         
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+           Reset
+          </Button>
+          
+        </form>
+      </Paper>
+    );
+  };
 
 ResetPassword.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  resetPassword: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { setAlert, login })(ResetPassword);
+export default connect(mapStateToProps, { setAlert, resetPassword })(ResetPassword);

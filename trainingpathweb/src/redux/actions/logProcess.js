@@ -1,4 +1,4 @@
-import { post, get } from "../../utils/access";
+import { post, get, update } from "../../utils/access";
 import { urlLogProcess } from "../../config/routes";
 import { setAlert } from "./alert";
 import {
@@ -63,6 +63,39 @@ export const addLogProcess = (rowData, user) => async (dispatch) => {
         chapterRef: rowData._id,
       };
       const res = await post(urlLogProcess, logProcess, config);
+
+      if (res.data) {
+        dispatch(setAlert("Chapter added", "success"));
+      }
+    }
+  } catch (error) {
+    dispatch({
+      //   type: COURSE_ERROR,
+      payload: {
+        msg: error.response.statusText,
+        status: error.response.status,
+      },
+    });
+  }
+};
+
+//Add log process
+export const updateLogProcess = (rowData, user) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    if (rowData._id) {
+      const logProcess = {
+        status: "finished",
+      };
+      const res = await update(
+        `${urlLogProcess}/${rowData._id}`,
+        logProcess,
+        config
+      );
 
       if (res.data) {
         dispatch(setAlert("Chapter added", "success"));

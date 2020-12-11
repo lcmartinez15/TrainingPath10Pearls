@@ -5,6 +5,7 @@ import {
   urlChaptersCourseUdemy,
 } from "../../config/routes";
 import { setAlert } from "./alert";
+import { redirect } from "./ui";
 import {
   GET_COURSE,
   COURSE_ERROR,
@@ -78,6 +79,7 @@ export const addCourse = (formData, chapters) => async (dispatch) => {
     });
 
     dispatch(setAlert("Course created", "success"));
+    dispatch(redirect("/courses"));
   } catch (error) {
     dispatch({
       type: COURSE_ERROR,
@@ -171,6 +173,7 @@ export const getChaptersCoursesUdemy = (course) => async (dispatch) => {
         type: UDEMYCHAPTERS_COURSE,
         payload: chapters,
       });
+      dispatch(redirect("/addCourse"));
     } else {
       dispatch({
         type: COURSE_ERROR,
